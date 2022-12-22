@@ -1,4 +1,17 @@
-const promptBtn = document.getElementById('alert-btn');
+const gridBtn = document.getElementById('grid-btn');
+
+window.onload = function() {
+    let count = 256,
+        div,
+        grid = document.getElementById('grid');
+
+    for (let i = 0; i < count; i++) { 
+            div = document.createElement('div');
+            div.classList.add('pixel');
+            div.addEventListener('mouseover', changeColor);
+            grid.appendChild(div);
+        }
+};
 
 function changeColor(){
     this.classList.add('hovered');
@@ -6,37 +19,21 @@ function changeColor(){
 
 function changeGrid(){
     const perSide = prompt('How many squares per side? ');
+    perSide > 100 ? perSide = 100: perSide;
 
     let count = perSide * perSide,
         div,
-        grid = document.getElementById('grid'),
-        fragment = document.createDocumentFragment();
+        grid = document.getElementById('grid');
+        
+    grid.innerHTML = '';
+    document.documentElement.style.setProperty("--columns-row", perSide)
 
-    for (let i = 0; i < count; ++i) { 
+    for (let i = 0; i < count; i++) { 
             div = document.createElement('div');
             div.classList.add('pixel')
             div.addEventListener('mouseover', changeColor)
-            fragment.appendChild(div);
+            grid.appendChild(div);
         }
-
-    grid.appendChild(fragment);
 };
 
-promptBtn.addEventListener('click', changeGrid); // this should generate whole new grid
-
-window.onload = function() {
-    let count = 256,
-        div,
-        grid = document.getElementById('grid'),
-        fragment = document.createDocumentFragment();
-
-    for (let i = 1; i < count + 1; ++i) { 
-            div = document.createElement('div');
-            div.style.cssText('border: 1px solid black; height: 25px; width: 25px');
-            div.addEventListener('mouseover', changeColor);
-            fragment.appendChild(div);
-        }
-
-    grid.appendChild(fragment);
-};
-
+gridBtn.addEventListener('click', changeGrid); // this should generate whole new grid
